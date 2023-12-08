@@ -26,15 +26,12 @@ cardScore = { j: chr(ord('0') + i) for i, j in enumerate(reversed(cardTypes)) }
 
 def sames(hand: str):
     m = 0
-    counts = {}
+    counts = defaultdict(lambda: [])
     for i in hand:
         cnt = hand.count(i)
         if cnt > m:
             m = cnt
-        if cnt in counts:
-            counts[cnt].append(i)
-        else:
-            counts[cnt] = [i]
+        counts[cnt].append(i)
 
     return counts
 
@@ -60,9 +57,6 @@ def rawTypeOf(hand: str):
 
 def typeOf(hand:str):
     highest = 0
-
-    if 5 in sames(hand) and hand[0] == 'J':
-        print(' ')
     
     for newJoker in cardTypes:
         
