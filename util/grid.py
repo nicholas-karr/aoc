@@ -114,8 +114,25 @@ class Grid:
 
         return s
     
-    def makeFromStrs(lines):
-        lines = [i.strip() for i in lines]
+
+    
+    def makeFromStrs(lines: [str]):
+        def strip(s):
+            if s[-1] == '\n':
+                return s[:-1]
+            else:
+                return s
+
+        #lines = [list(i.strip()) for i in lines]
+        lines = [list(strip(i)) for i in lines]
+
+        maxLen = max([len(i) for i in lines])
+        minLen = min([len(i) for i in lines])
+        lines = [i + [''] * (maxLen - len(i)) for i in lines]
+
+        maxLen2 = max([len(i) for i in lines])
+        minLen2 = min([len(i) for i in lines])
+
         g = Grid(len(lines), len(lines[0]), lines)
         return g
 
@@ -133,3 +150,23 @@ class Grid:
             s += '\n'
 
         return s
+    
+    def replace(self, target, replacement):
+        for row in range(self.maxRow):
+            for col in range(self.maxCol):
+                pos = Pos2d(col, row)
+
+                if self.get(pos, None) == target:
+                    self.set(pos, replacement)
+
+    def count(self, target):
+        cnt = 0
+
+        for row in range(self.maxRow):
+            for col in range(self.maxCol):
+                pos = Pos2d(col, row)
+
+                if self.get(pos, None) == target:
+                    cnt += 1
+
+        return cnt
