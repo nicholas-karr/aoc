@@ -18,15 +18,9 @@ for line in lines:
 lefts = sorted(lefts)
 rights = sorted(rights)
 
-sum = 0
-for i in range(len(lefts)):
-    sum += abs(lefts[i] - rights[i])
+sums = sum([abs(i - j) for i, j in zip(lefts, rights)])
+print(sums)
 
-print(sum)
-
-score = 0
-for i in lefts:
-    cnt = rights.count(i)
-    score += i * cnt
+score = sum([rights.count(i) * i for i in lefts])
 
 print(score)
